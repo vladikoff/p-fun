@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" class="no-js">
+	<head><meta charset="utf-8">
+
+		<!-- www.phpied.com/conditional-comments-block-downloads/ -->
+		<!--[if IE]><![endif]-->
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess --><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title></title><meta name="description" content=""><meta name="author" content="">
+
+		<!-- CSS : implied media="all" -->
+		<link rel="stylesheet" href="css/style.css?v=1">
+
+		<!-- For the less-enabled mobile browsers like Opera Mini -->
+		<link rel="stylesheet" media="handheld" href="css/handheld.css?v=1">
+
+		<!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+		<script src="js/modernizr-1.5.min.js">
+		</script>
+		<script src="js/hash/jshashset.js" >
+		</script>
+		<script src="js/hash/jshashtable.js" >
+		</script>
+		<script src="js/fdclosure/fd_closure.js" >
+		</script>
+		<script src="js/fdclosure/main.js" >
+		</script>
+	</head>
+	<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+
+	<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+	<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+	<!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+	<!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+	<!--[if (gt IE 9)|!(IE)]><!-->
+	<body>
+		<!--<![endif]-->
+
+		<div id="container">
+			<header>
+			</header>
+			<div id="main">
+			</div>
+			<div id="fd_closure">
+				<p>
+				Instruction: <br />
+				Click on 'Add FD' button for additional FD. <br />
+				Click on 'Convert to BCNF' button to get BCNF form of the relation R. <br />
+<br />
+				Example:<br />
+				FD's:<br />
+				&nbsp;&nbsp;A -> B<br />
+				&nbsp;&nbsp;AB -> C<br />
+<br />
+				Implementation Note:<br />
+				This app is fully implemented in HTML/CSS/Javascript.<br />
+				Main algorithm is implemented in Javascript.<br />
+				Please enable your Javascript on your web-browser.<br />
+				</p>
+				<br />
+				FD's:
+				<br />
+				<ul id="fd_list">
+					<li>
+						<input type="text" name="fdFrom_1" id="fdFrom_1" />
+						->
+						<input type="text" name="fdTo_1" id="fdTo_1" />
+					</li>
+				</ul>
+				<ul>
+					<input type="button" value="Add FD" onclick="addField('fd_list','fdFrom_','fdTo_',20);" />
+				</ul>
+				<br />
+				<input type="button" value="Get FD Closure" onclick="main('output_field');" />
+				<br />
+				<ul id="output_field">
+				</ul>
+				
+<br />
+Inference rules - Armstrong's Axiom
+<ol>
+<li>Reflexivity - <br />
+	If 
+	{B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>} <font face="Symbol">&sube;</font> {A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>}, 
+	<br />then 
+	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub> <font face="Symbol">&rarr;</font> B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>.
+	This is called trivial FD's.
+</li>
+<li>Augmentation - <br />
+	If
+	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub> <font face="Symbol">&rarr;</font> B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>, 
+	<br />then 
+	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
+	<font face="Symbol">&rarr;</font> 
+	B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
+	for any set of attributes C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
+</li>
+<li>Transitivity - <br />
+	If
+	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>
+	<font face="Symbol">&rarr;</font>
+	B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>
+	and
+	B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>
+	<font face="Symbol">&rarr;</font>
+	C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>, 
+	<br />then 
+	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>
+	<font face="Symbol">&rarr;</font>
+	C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
+</li>
+<br />
+</ol>
+Algorithm: <br />
+input: set of functional dependency F <br />
+&nbsp;&nbsp;F+ = F <br />
+&nbsp;&nbsp;while(true) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;for_each D in F+: <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apply reflexivity and augmentation to D <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add the new FD's to F+ <br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;for_each pair P of FD's in F+: <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apply the transitivity rule to P <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add the new FD's to F+ <br />
+&nbsp;&nbsp;break when F+ no longer changes<br />
+return F+ <br />
+
+			</div>
+			<footer>
+			</footer>
+		</div> <!--! end of #container -->
+		<!-- Javascript at the bottom for fast page loading -->
+
+		<!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+		</script>
+		<script>
+	!window.jQuery && document.write('<script src="js/jquery-1.4.2.min.js"><\/script>')
+		</script>
+		<script src="js/plugins.js?v=1">
+		</script>
+		<!--[if lt IE 7 ]>
+		<script src="js/dd_belatedpng.js?v=1"></script>
+		<![endif]-->
+
+		<!-- yui profiler and profileviewer - remove for production -->
+		<script src="js/profiling/yahoo-profiling.min.js?v=1">
+		</script>
+		<script src="js/profiling/config.js?v=1">
+		</script>
+		<!-- end profiling code -->
+	</body>
+</html>
