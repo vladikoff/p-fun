@@ -15,13 +15,14 @@ function FdPair(fdFrom, fdTo) {
 	if (fdFrom.constructor === String && fdTo.constructor === String) {
 		this.fdFrom = removeDups(fdFrom);
 		this.fdTo = removeDups(fdTo);
-	} else { // assume set as args
+	} else { // assume set 
 		this.fdFrom = fdFrom;
 		this.fdTo = fdTo;
 	}
 
 	this.values = function () {
-		return [this.fdFrom.values(), this.fdTo.values()];	
+		// note 2d-array!
+		return [this.fdFrom.values().sort(), this.fdTo.values().sort()];	
 	};
 
 	this.toString = function() {
@@ -53,32 +54,34 @@ function fdClosure(fdPairArr) {
  */
 function reflexivity(fd) { // FdPair
 	// generate trivial fd's
-	var rv = new Array();
-	var fdFromArr = fd.values();
+	var rv = new HashSet();
+	var fdFromArr = fd.fdFrom.values();
 	// note that we don't care about fdTo values
 	var fromLen =fdFromArr.length;
 	for (var start=0; start<fromLen; start++) {
 		for (var end=start+1; end<=fromLen; end++) {
 			var to = fdFromArr.slice(start, end).join("");
-			rv.push(new FdPair(fd.fdFrom.values().join(""), to));
+			rv.add(new FdPair(fd.fdFrom.values().join(""), to));
 		}
 	}
 	return rv;
 }
 
-function augmentation(fd, attr) { // fd: hashSet, attr: hashSet of attributes
-	var attrArr = attr.values();
-	var attrLen = attrArr.length();
+function augmentation(fd, attr) { // fd: hashSet, attr: str
+	var attrArr = removeDups(attr).values();
+	var attrLen = attrArr.length;
 	var from = fd.fdFrom.values().join("");
 	var to = fd.fdTo.values().join("");
+	var rv = new HashSet();
 
 	for (var start=0; start<attrLen; start++) {
 		for (var end=start+1; end<=attrLen; end++) {
-			// doc says shallow copy!??! but looks like deep copy...
-			rv.push(new FdPair(
-				from.concat(attrArr.slice(start,end)),to));
+			var target = attrArr.slice(start,end);
+			rv.add(new FdPair(
+				from.concat(target),to.concat(target)));
 		}
 	}
+	return rv;
 }
 
 function transivity(fd_A, fd_B) { // args are FdPair
