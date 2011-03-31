@@ -9,15 +9,18 @@ test("Test hashset", function() {
 test("Test FdPair", function() {
 	var a = new FdPair("A", "B");
 	var b = new FdPair("A", "B");
+	equal(true, equalDeep(a,b));
 	deepEqual((new FdPair("A","B")).values(), a.values(), "Simple fd equality test");
 });
-/*
 module("Reflexivity");
 test("Basic Reflexibity", function() {
 	var fd = new FdPair("A", "C"); // A->C
+	var ex = new FdPair("A","A");
 	var rv = reflexivity(fd);
-	deepEquals([new FdPair("A","A")], rv, "A->A test")
+	equal(true, equalDeep(rv,ex));
+	deepEqual(ex, rv, "A->A test")
 });
+/*
 
 module("Augmentation");
 module("Transivity");
