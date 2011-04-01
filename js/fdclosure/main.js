@@ -11,15 +11,15 @@ function main(outputFieldId) {
 		return;
 	gInitialCall = false;
 
-	var fdPairArr = processInput("fdTo_", "fdFrom_");
-	var fdClosureArr = fdClosure(fdPairArr)
+	var fdPairSet = processInput("fdTo_", "fdFrom_");
+	var fdClosureSet = fdClosure(fdPairSet)
 
-	output(outputFieldId, fdClosureArr);
+	output(outputFieldId, fdClosureSet);
 }
 
 // assume input is validated...
 function processInput(fdToIdPrefix, fdFromIdPrefix) {
-	var fdPairs = new Array();
+	var fdPairs = new HashSet();
 	var fdIndex = 1; // start from 1 !
 	while(true) {
 		var fdFromField = document.getElementById(fdFromIdPrefix+fdIndex);
@@ -31,7 +31,7 @@ function processInput(fdToIdPrefix, fdFromIdPrefix) {
 		if(fdFromField.value == "" || fdToField.value == "")
 			continue;
 		
-		fdPairs.push(new FdPair(fdFromField.value, fdToField.value));
+		fdPairs.add(new FdPair(fdFromField.value, fdToField.value));
 	}
 	return fdPairs; // array of fd's (from->to pairs)
 }
@@ -96,13 +96,15 @@ function addField(area,fromField,toField, field, limit) {
 	}
 }
 
-function output(outputFieldId, fdPairArr) {
+function output(outputFieldId, fdPairSet) {
 	document.getElementById(outputFieldId).appendChild(document.createTextNode("FD closure"));
 	var maps = "->";
 
-	for (var fdIndex=0; fdIndex<fdPairArr.length; fdIndex++) {
+	var arr = fdPairSet.values();
+	for (var i in arr) {
 		var elem = document.createElement("li");
-		elem.appendChild(document.createTextNode(fdPairArr[fdIndex].fdFrom.values()+maps+fdPairArr[fdIndex].fdTo.values()));
+		elem.appendChild(document.createTextNode(
+			arr[i].fdFrom.values()+maps+arr[i].fdTo.values()));
 		document.getElementById(outputFieldId).appendChild(elem);
 	}
 }
@@ -134,4 +136,3 @@ function validate(input)
     //    document.getElementById("txt" + num).focus();
     // }
 }
-
