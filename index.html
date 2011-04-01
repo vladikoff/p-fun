@@ -51,8 +51,8 @@
 <br />
 				Example:<br />
 				FD's:<br />
-				&nbsp;&nbsp;A -> B<br />
-				&nbsp;&nbsp;AB -> C<br />
+				&nbsp;&nbsp;A<font face="Symbol">&rarr;</font>B<br />
+				&nbsp;&nbsp;AB<font face="Symbol">&rarr;</font>C<br />
 <br />
 				Implementation Note:<br />
 				This app is fully implemented in HTML/CSS/Javascript.<br />
@@ -64,13 +64,10 @@
 				<br />
 				<ul id="fd_list">
 					<li>
-						<input type="text" name="fdFrom_1" id="fdFrom_1" />
-						->
-						<input type="text" name="fdTo_1" id="fdTo_1" />
+						<input type="text" name="fdFrom_1" id="fdFrom_1" onkeyup="validate(this)" />
+						<font face="Symbol">&rarr;</font>
+						<input type="text" name="fdTo_1" id="fdTo_1" onkeyup="validate(this)" onfocus="addField('fd_list','fdFrom_','fdTo_', this, 20)" />
 					</li>
-				</ul>
-				<ul>
-					<input type="button" value="Add FD" onclick="addField('fd_list','fdFrom_','fdTo_',20);" />
 				</ul>
 				<br />
 				<input type="button" value="Get FD Closure" onclick="main('output_field');" />
