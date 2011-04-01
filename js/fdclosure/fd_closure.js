@@ -3,11 +3,6 @@
  */
 
 
-function removeDups(str) {
-	var attr = new HashSet();
-	attr.addAll(str.split(""));
-	return attr;
-}
 
 function FdPair(fdFrom, fdTo) {
 	this.fdFrom = null;
@@ -67,7 +62,12 @@ function reflexivity(fd) { // FdPair
 	return rv;
 }
 
-function augmentation(fd, attr) { // fd: hashSet, attr: str
+function augmentation(fd, attr) { // fd: FdPair, attr: str
+        // Note: ex) if attr== "" -> doesn't return fd itself
+
+        if (attr == "" || attr == null)
+            return null;
+
 	var attrArr = removeDups(attr).values();
 	var attrLen = attrArr.length;
 	var from = fd.fdFrom.values().join("");
@@ -76,22 +76,33 @@ function augmentation(fd, attr) { // fd: hashSet, attr: str
 
 	for (var start=0; start<attrLen; start++) {
 		for (var end=start+1; end<=attrLen; end++) {
-			var target = attrArr.slice(start,end);
-			rv.add(new FdPair(
-				from.concat(target),to.concat(target)));
+			var target = attrArr.slice(start,end).join("");
+			rv.add(new FdPair(from.concat(target),to.concat(target)));
 		}
 	}
-	return rv;
+	return rv; // HashSet of Fd pair
 }
 
-function transivity(fd_A, fd_B) { // args are FdPair
-	if(fd_A.fdTo.eqauls(fd_B.fdFrom))
-		return [new FdPair(fd_A.fdFrom, fd_B.fdTo)];
-	else if(fd_B.fdTo.eqauls(fd_A.fdFrom))
-		return [new FdPair(fd_B.fdFrom, fd_A.fdTo)];
+// return: set of FdPair (only contains single element...)
+function transivity(fd_A, fd_B) { // args:FdPair
+        if(fd_A == null || fd_B == null)
+            return null;
+
+        var rv = new HashSet();
+	if(equalDeep(fd_A.fdTo, fd_B.fdFrom))
+		return rv.add(new FdPair(fd_A.fdFrom, fd_B.fdTo));
+	else if(equalDeep(fd_B.fdTo, fd_A.fdFrom))
+		return rv.add(new FdPair(fd_B.fdFrom, fd_A.fdTo));
 	else
 		return null;
 }
+
+function removeDups(str) {
+	var attr = new HashSet();
+	attr.addAll(str.split(""));
+	return attr;
+}
+
 
 equalDeep = function () {
 

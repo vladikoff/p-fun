@@ -1,20 +1,37 @@
 /**
  *
  */
-var gInitialCall = true;
+var output_field_id = "fd_closure_list";
+function main(output_div) {
+    var outDiv = document.getElementById(output_div);
+    if(document.getElementById(output_field_id)) {
+        var child = document.getElementById(output_field_id);
+        outDiv.removeChild(child);
+    }
+    
+    var fdPairSet = processInput("fdTo_", "fdFrom_");
+    var fdClosureSet = fdClosure(fdPairSet)
 
-function inputValidation(input) {
+    output(output_div, fdClosureSet);
 }
 
-function main(outputFieldId) {
-	if(gInitialCall == false)
-		return;
-	gInitialCall = false;
-
-	var fdPairSet = processInput("fdTo_", "fdFrom_");
-	var fdClosureSet = fdClosure(fdPairSet)
-
-	output(outputFieldId, fdClosureSet);
+function validate(input) {
+    input.value = input.value.toUpperCase();
+        
+    var str = input.value;
+    var str2 = str;
+    var len = str.length;
+            
+    // Text Validation
+    for(var i=0; i<len; i++)
+    {
+        var c = str2.charAt(i);
+        if(!(c >= 'A' && c <= 'Z'))   
+        {
+           str = str.replace(c, "");
+        }
+    }
+    input.value = str;
 }
 
 // assume input is validated...
@@ -96,43 +113,22 @@ function addField(area,fromField,toField, field, limit) {
 	}
 }
 
-function output(outputFieldId, fdPairSet) {
-	document.getElementById(outputFieldId).appendChild(document.createTextNode("FD closure"));
-	var maps = "->";
+function output(output_div, fdPairSet) {
+//    document.getElementById(output_div).appendChild(document.createTextNode("FD closure"));
+    var list = document.createElement("ul");
+    list.id = output_field_id;
 
-	var arr = fdPairSet.values();
-	for (var i in arr) {
-		var elem = document.createElement("li");
-		elem.appendChild(document.createTextNode(
-			arr[i].fdFrom.values()+maps+arr[i].fdTo.values()));
-		document.getElementById(outputFieldId).appendChild(elem);
-	}
-}
+    var maps = document.createElement("font");
+    maps.setAttribute("face","Symbol");
+    maps.appendChild(document.createTextNode(" \u2192 "));
 
-function validate(input)
-{
-    input.value = input.value.toUpperCase();
-        
-    var str = input.value;
-    var str2 = str;
-    var len = str.length;
-            
-    // Text Validation
-    for(var i=0; i<len; i++)
-    {
-        var c = str2.charAt(i);
-        if(!(c >= 'A' && c <= 'Z'))   
-        {
-           str = str.replace(c, "");
-        }
+    var arr = fdPairSet.values();
+    for (var i in arr) {
+            var elem = document.createElement("li");
+            elem.appendChild(document.createTextNode(arr[i].fdFrom.values()));
+            elem.appendChild(maps.cloneNode(true));
+            elem.appendChild(document.createTextNode(arr[i].fdTo.values()));
+            list.appendChild(elem);
     }
-    input.value = str;
-    //             
-    // // Symbol Validation
-    // if((len > 1 && str.charAt(len-1) == ',') || (len > 2 && str.charAt(len-2)== '-' && str.charAt(len-1)=='>'))
-    // {
-    //    txt.value = str.replace(",", "").replace("->","");
-    //    add();
-    //    document.getElementById("txt" + num).focus();
-    // }
+    document.getElementById(output_div).appendChild(list);
 }
