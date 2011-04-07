@@ -2,6 +2,7 @@
  *
  */
 var output_field_id = "fd_closure_list";
+
 function main(output_div) {
     var outDiv = document.getElementById(output_div);
     if(document.getElementById(output_field_id)) {

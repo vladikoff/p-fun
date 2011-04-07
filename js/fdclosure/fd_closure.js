@@ -1,9 +1,3 @@
-/**
- *
- */
-
-
-
 function FdPair(fdFrom, fdTo) {
 	this.fdFrom = null;
 	this.fdTo = null;
@@ -25,23 +19,39 @@ function FdPair(fdFrom, fdTo) {
 	};
 }
 
-function fdClosure(fdPairArr) {
-	var closureArr = fdPairArr;
+/*
+  while(true) 
+    for_each D in F+: 
+      apply reflexivity and augmentation to D 
+      add the new FD's to F+ 
 
-	/*
+    for_each pair P of FD's in F+: 
+      apply the transitivity rule to P 
+      add the new FD's to F+ 
+  break when F+ no longer changes
+*/
+function fdClosure(fdPairSet) {
+	var closureSet = fdPairSet;
+	var prevSize = fdPairSet.size();
+
  	done:
  	while(true) {
- 	for (x in closureArr) {
- 	closureArr.push(new FdPair("liojoef", "ljdoifj"));
- 	if(closureArr.length > 5) {
- 	break done;
- 	}
+		for (x in closureSet) {
+						
+
+		}
+
+/*
+		for () {
+
+		}
+
+		if(prevSize == )
+			break done;
+*/
  	}
 
- 	}
- 	*/
-
-	return closureArr;
+	return closureSet;
 }
 
 /*
