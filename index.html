@@ -70,10 +70,12 @@
 					</li>
 				</ul>
 				<br />
-				<input type="button" value="Get FD Closure" onclick="main('output_field');" />
+				<input type="button" value="Get FD Closure" onclick="main('fd_output');" />
+			</div>
 				<br />
-				<ul id="output_field">
-				</ul>
+                        <div id="fd_output">
+                            FD Closure: <br />
+                        </div>
 				
 <br />
 Inference rules - Armstrong's Axiom
@@ -110,21 +112,7 @@ Inference rules - Armstrong's Axiom
 </li>
 <br />
 </ol>
-Algorithm: <br />
-input: set of functional dependency F <br />
-&nbsp;&nbsp;F+ = F <br />
-&nbsp;&nbsp;while(true) <br />
-&nbsp;&nbsp;&nbsp;&nbsp;for_each D in F+: <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apply reflexivity and augmentation to D <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add the new FD's to F+ <br />
-<br />
-&nbsp;&nbsp;&nbsp;&nbsp;for_each pair P of FD's in F+: <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apply the transitivity rule to P <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add the new FD's to F+ <br />
-&nbsp;&nbsp;break when F+ no longer changes<br />
-return F+ <br />
 
-			</div>
 			<footer>
 			</footer>
 		</div> <!--! end of #container -->
