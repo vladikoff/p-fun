@@ -1,0 +1,22 @@
+*********************************************************************
+* 
+* CS411 Spring 2011
+* P-fun
+* FD Closure 
+* 
+* Author: Yo Han Ko (yohanko1)
+* 
+*********************************************************************
+Implementation:
+The main logic is fully implemented in Javascript.
+Please see js/src/ directory for the source code.
+
+System Requirements:
+This has been tested on Firefox 3.6 and Chrome 10.
+
+Instruction for Running program:
+Open index.html file with Firefox 3.6 or Chrome 10 (not tested on IE)
+
+Note: Inputting many FD may freeze browser...
+
+Thanks for reading!
