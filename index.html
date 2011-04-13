@@ -2,33 +2,16 @@
 <html lang="en" class="no-js">
 	<head><meta charset="utf-8">
 
-		<!-- www.phpied.com/conditional-comments-block-downloads/ -->
 		<!--[if IE]><![endif]-->
 
 		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess --><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-		<title></title><meta name="description" content=""><meta name="author" content="">
-
-		<!-- CSS : implied media="all" -->
+		<title>FD Closure</title><meta name="description" content="FD Closure for cs411 p-fun project"><meta name="author" content="Yo Han Ko">
 		<link rel="stylesheet" href="css/style.css?v=1">
-
-		<!-- For the less-enabled mobile browsers like Opera Mini -->
-		<link rel="stylesheet" media="handheld" href="css/handheld.css?v=1">
-
-		<!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
 		<script src="js/modernizr-1.5.min.js">
 		</script>
-		<script src="js/hash/jshashset.js" >
-		</script>
-		<script src="js/hash/jshashtable.js" >
-		</script>
-		<script src="js/fdclosure/fd_closure.js" >
-		</script>
-		<script src="js/fdclosure/main.js" >
-		</script>
 	</head>
-	<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 
 	<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 	<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -43,19 +26,39 @@
 			</header>
 			<div id="instruction">
 				<p>
-				Instruction: <br />
-				Click on 'Add FD' button for additional FD. <br />
-				Click on 'Convert to BCNF' button to get BCNF form of the relation R. <br />
-<br />
-				Example:<br />
-				FD's:<br />
-				&nbsp;&nbsp;A<font face="Symbol">&rarr;</font>B<br />
-				&nbsp;&nbsp;AB<font face="Symbol">&rarr;</font>C<br />
-<br />
-				Implementation Note:<br />
-				This app is fully implemented in HTML/CSS/Javascript.<br />
-				Main algorithm is implemented in Javascript.<br />
-				Please enable your Javascript on your web-browser.<br />
+					Instruction:
+					<br />
+					Input set of FD's in box below. Just keep typing. More boxes will be generated. <br />
+					Note that trivial functional dependencies will not be generated (since they are obvious). <br />
+					<br />
+					<br />
+					Example:
+					<br />
+					FD's:
+					<br />
+					&nbsp;&nbsp;A
+					<font face="Symbol">
+						&rarr;
+					</font>B
+					<br />
+					&nbsp;&nbsp;AB
+					<font face="Symbol">
+						&rarr;
+					</font>C
+					<br />
+					<br />
+					Implementation Note:
+					<br />
+					This app is fully implemented in HTML/CSS/Javascript.
+					<br />
+					Main algorithm is implemented in Javascript.
+					<br />
+					Please enable your Javascript on your web-browser.
+					<br />
+					Since it's running on Javascript, browser may freeze on large number of inputs.
+					<br />
+					It has been tested on Firefox3.6 and Chrome 10.
+					<br />
 				</p>
 			</div>
 			<div id="fd_closure">
@@ -65,61 +68,250 @@
 				<ul id="fd_list">
 					<li>
 						<input type="text" name="fdFrom_1" id="fdFrom_1" onkeyup="validate(this)" />
-						<font face="Symbol">&rarr;</font>
+						<font face="Symbol">
+							&rarr;
+						</font>
 						<input type="text" name="fdTo_1" id="fdTo_1" onkeyup="validate(this)" onfocus="addField('fd_list','fdFrom_','fdTo_', this, 20)" />
 					</li>
 				</ul>
 				<br />
 				<input type="button" value="Get FD Closure" onclick="main('fd_output');" />
 			</div>
+			<br />
+			<div id="fd_output">
+				FD Closure:
 				<br />
-                        <div id="fd_output">
-                            FD Closure: <br />
-                        </div>
 			</div>
-				
-<br />
-<div id="algorithm">
-Inference rules - Armstrong's Axiom
-<ol>
-<li>Reflexivity - <br />
-	If 
-	{B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>} <font face="Symbol">&sube;</font> {A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>}, 
-	<br />then 
-	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub> <font face="Symbol">&rarr;</font> B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>.
-	This is called trivial FD's.
-</li>
-<li>Augmentation - <br />
-	If
-	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub> <font face="Symbol">&rarr;</font> B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>, 
-	<br />then 
-	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
-	<font face="Symbol">&rarr;</font> 
-	B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
-	for any set of attributes C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
-</li>
-<li>Transitivity - <br />
-	If
-	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>
-	<font face="Symbol">&rarr;</font>
-	B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>
-	and
-	B<sub>1</sub>, B<sub>2</sub>, ..., B<sub>m</sub>
-	<font face="Symbol">&rarr;</font>
-	C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>, 
-	<br />then 
-	A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>
-	<font face="Symbol">&rarr;</font>
-	C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub>
-</li>
-<br />
-</ol>
-
+		</div>
+		<br />
+		<div id="algorithm">
+			Inference rules - Armstrong's Axiom
+			<ol>
+				<li>
+					Reflexivity -
+					<br />
+					If
+					{B
+					<sub>
+						1
+					</sub>, B
+					<sub>
+						2
+					</sub>, ..., B
+					<sub>
+						m
+					</sub>}
+					<font face="Symbol">
+						&sube;
+					</font> {A
+					<sub>
+						1
+					</sub>, A
+					<sub>
+						2
+					</sub>, ..., A
+					<sub>
+						n
+					</sub>},
+					<br />
+					then
+					A
+					<sub>
+						1
+					</sub>, A
+					<sub>
+						2
+					</sub>, ..., A
+					<sub>
+						n
+					</sub>
+					<font face="Symbol">
+						&rarr;
+					</font> B
+					<sub>
+						1
+					</sub>, B
+					<sub>
+						2
+					</sub>, ..., B
+					<sub>
+						m
+					</sub>.
+					This is called trivial FD's.
+				</li>
+				<li>
+					Augmentation -
+					<br />
+					If
+					A
+					<sub>
+						1
+					</sub>, A
+					<sub>
+						2
+					</sub>, ..., A
+					<sub>
+						n
+					</sub>
+					<font face="Symbol">
+						&rarr;
+					</font> B
+					<sub>
+						1
+					</sub>, B
+					<sub>
+						2
+					</sub>, ..., B
+					<sub>
+						m
+					</sub>,
+					<br />
+					then
+					A
+					<sub>
+						1
+					</sub>, A
+					<sub>
+						2
+					</sub>, ..., A
+					<sub>
+						n
+					</sub>C
+					<sub>
+						1
+					</sub>, C
+					<sub>
+						2
+					</sub>, ..., C
+					<sub>
+						k
+					</sub>
+					<font face="Symbol">
+						&rarr;
+					</font>
+					B
+					<sub>
+						1
+					</sub>, B
+					<sub>
+						2
+					</sub>, ..., B
+					<sub>
+						m
+					</sub>C
+					<sub>
+						1
+					</sub>, C
+					<sub>
+						2
+					</sub>, ..., C
+					<sub>
+						k
+					</sub>
+					for any set of attributes C
+					<sub>
+						1
+					</sub>, C
+					<sub>
+						2
+					</sub>, ..., C
+					<sub>
+						k
+					</sub>
+				</li>
+				<li>
+					Transitivity -
+					<br />
+					If
+					A
+					<sub>
+						1
+					</sub>, A
+					<sub>
+						2
+					</sub>, ..., A
+					<sub>
+						n
+					</sub>
+					<font face="Symbol">
+						&rarr;
+					</font>
+					B
+					<sub>
+						1
+					</sub>, B
+					<sub>
+						2
+					</sub>, ..., B
+					<sub>
+						m
+					</sub>
+					and
+					B
+					<sub>
+						1
+					</sub>, B
+					<sub>
+						2
+					</sub>, ..., B
+					<sub>
+						m
+					</sub>
+					<font face="Symbol">
+						&rarr;
+					</font>
+					C
+					<sub>
+						1
+					</sub>, C
+					<sub>
+						2
+					</sub>, ..., C
+					<sub>
+						k
+					</sub>,
+					<br />
+					then
+					A
+					<sub>
+						1
+					</sub>, A
+					<sub>
+						2
+					</sub>, ..., A
+					<sub>
+						n
+					</sub>
+					<font face="Symbol">
+						&rarr;
+					</font>
+					C
+					<sub>
+						1
+					</sub>, C
+					<sub>
+						2
+					</sub>, ..., C
+					<sub>
+						k
+					</sub>
+				</li>
+				<br />
+			</ol>
 			<footer>
 			</footer>
 		</div> <!--! end of #container -->
 		<!-- Javascript at the bottom for fast page loading -->
 
+		<script type="text/javascript">
+	JSCLASS_PATH = 'js/jsclass/min'
+		</script>
+		<script type="text/javascript" src="js/jsclass/min/loader-browser.js" >
+		</script>
+		<script src="js/fdclosure/fd_closure.js" >
+		</script>
+		<script src="js/fdclosure/main.js" >
+		</script>
 		<!-- Grab Google CDN's jQuery. fall back to local if necessary -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
 		</script>
@@ -131,12 +323,5 @@ Inference rules - Armstrong's Axiom
 		<!--[if lt IE 7 ]>
 		<script src="js/dd_belatedpng.js?v=1"></script>
 		<![endif]-->
-
-		<!-- yui profiler and profileviewer - remove for production -->
-		<script src="js/profiling/yahoo-profiling.min.js?v=1">
-		</script>
-		<script src="js/profiling/config.js?v=1">
-		</script>
-		<!-- end profiling code -->
 	</body>
 </html>
