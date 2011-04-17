@@ -198,14 +198,22 @@ button {  width: auto; overflow: visible; }
 
 
  /* Primary Styles
-    Author: 
+    Author: Yo Han Ko
  */
-
-
-
-
-
-
+#container {
+    position: relative;
+    width: 800px;
+    margin: 30px auto;
+    padding: 0;
+}
+#output_field{
+    margin: 0 0 15px 0;
+    padding: 0 0 10px 0;
+    line-height: 2;
+    border-top: 1px solid rgba(0, 0, 0, 1);
+    border-bottom: 1px solid rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
 
 
 

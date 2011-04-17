@@ -4,7 +4,7 @@
  * Author: Yo Han Ko (yohanko1)
  * 
  */
-var output_field_id = "fd_closure_list";
+var output_field_id = "output_field";
 var target_attr = null;
 
 function main(output_div) {
@@ -39,8 +39,6 @@ function validate(input) {
     input.value = str;
 }
 
-
-// assume input is validated...
 function processInput(attr, fdToIdPrefix, fdFromIdPrefix) {
         // check for target attr 
         var attrField = document.getElementById(attr);
@@ -66,20 +64,34 @@ function processInput(attr, fdToIdPrefix, fdFromIdPrefix) {
 	return fds; 
 }
 
+function hasEmptyBox(fromField, toField, lastIndex) {
+        console.log(lastIndex);
+        for(var i=lastIndex; i>0; --i) {
+            var fromElem = document.getElementById(fromField+i);
+            var toElem = document.getElementById(toField+i);
+            if (fromElem == null || toElem == null)
+                continue;
+           if(fromElem.value == "" && toElem.value == "")
+                return true;
+        }
+        return false;
+}
 
 function addField(area,fromField,toField, field, limit) {
-
 	var field_area = document.getElementById(area);
-	var all_inputs = field_area.getElementsByTagName("input");
-	var last_item = all_inputs.length - 1;
-	var last = all_inputs[last_item].id;
-	var count = Number(last.split("_")[1]) + 1;
+        var lastIndex = (field_area.getElementsByTagName("input").length)/2;
 	
-	var next = (new String(field.id)).split("_")[0] + "_" + (count);
-	if(document.getElementById(next))
+        var arr = new String(field.id).split("_");
+	var count = Number(arr[1])+1;
+	var next = arr[0] + "_" + count;
+
+	if(hasEmptyBox(fromField, toField, lastIndex))
 		return;
-	//If the maximum number of elements have been reached, exit the function.
-	//		If the given limit is lower than 0, infinite number of fields can be created.
+        
+        var fromElem = document.getElementById(fromField+count);
+        var toElem = document.getElementById(toField+count);
+        if(fromElem != null || toElem != null)
+            return;
 	if(count > limit && limit > 0)
 		return;
 
@@ -127,7 +139,9 @@ function addField(area,fromField,toField, field, limit) {
 }
 
 function output(output_div, fdHash) {
-    var newLineElem = document.createElement('br');
+    var outputElem = document.createElement("div");
+    outputElem.id = output_field_id;
+    var brElem = document.createElement('br');
 
     // attr closure
     if (target_attr != null && target_attr != "") {
@@ -135,34 +149,31 @@ function output(output_div, fdHash) {
         for(var start=0; start<=target_attr.length; start++ ) {
             for(var end=start+1; end<=target_attr.length; end++ ) {
                 var toValue = fdHash.get(target_attr.slice(start,end).split(""));
-                attr_closure += toValue.toString().split(",");
+                attr_closure += toValue.join("");
             }
         }
         attr_closure = new JS.Set(attr_closure);
-        attr_closure = attr_closure.toArray().toString().split(",");
+        attr_closure = attr_closure.toArray().join("");
 
-        document.getElementById(output_div).appendChild(document.createTextNode("Closure of "+target_attr+" is "+attr_closure));
+        outputElem.appendChild(document.createTextNode("Closure of "+target_attr+" is "+attr_closure));
     }
 
-    document.getElementById(output_div).appendChild(newLineElem.cloneNode(true));
-    document.getElementById(output_div).appendChild(newLineElem.cloneNode(true));
-    document.getElementById(output_div).appendChild(document.createTextNode("FD Closure:"));
-    document.getElementById(output_div).appendChild(newLineElem.cloneNode(true));
-
-
     // fd closure
+    outputElem.appendChild(brElem.cloneNode(true));
+    outputElem.appendChild(document.createTextNode("FD Closure"));
     var list = document.createElement("ul");
-    list.id = output_field_id;
+    list.id = "fd_list";
     
     fdHash.forEachPair(function(key,value) {
             if (key.length == 0 || value.length == 0){
             	var i = 0; // place holder...	
             } else {
             var elem = document.createElement("li");
-            elem.appendChild(document.createTextNode(key.sort()+"->"+value.sort()));
+            elem.appendChild(document.createTextNode(key.sort().join("")+"->"+value.sort().join("")));
             list.appendChild(elem);
             }
-            });
+    });
+    outputElem.appendChild(list);
 
-    document.getElementById(output_div).appendChild(list);
+    document.getElementById(output_div).appendChild(outputElem);
 }

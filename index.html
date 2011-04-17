@@ -21,16 +21,32 @@
 	<body>
 		<!--<![endif]-->
 
-		<div id="container">
-			<header>
+		<div id="container" class=>
+                    <header> 
+                        <h1>
+                        Attribute and FD closure
+                        </h1>
 			</header>
 			<div id="instruction">
 				<p>
+					<br />
+					Implementation Note:
+					<br />
+					This app is fully implemented in HTML/CSS/Javascript.
+					<br />
+					Main algorithm is implemented in Javascript.
+					<br />
+					Please enable your Javascript on your web-browser.
+					<br />
+					Since it's running on Javascript, browser may freeze on large number of inputs.
+					<br />
+					It has been tested on Firefox3.6 and Chrome 10.
+					<br />
+					<br />
 					Instruction:
 					<br />
 					Input set of FD's in box below. Just keep typing. More boxes will be generated. <br />
 					Note that trivial functional dependencies will not be generated (since they are obvious). <br />
-					<br />
 					<br />
 					Example:
                                         <br />
@@ -50,19 +66,7 @@
 						&rarr;
 					</font>C
 					<br />
-					<br />
-					Implementation Note:
-					<br />
-					This app is fully implemented in HTML/CSS/Javascript.
-					<br />
-					Main algorithm is implemented in Javascript.
-					<br />
-					Please enable your Javascript on your web-browser.
-					<br />
-					Since it's running on Javascript, browser may freeze on large number of inputs.
-					<br />
-					It has been tested on Firefox3.6 and Chrome 10.
-					<br />
+
 				</p>
 			</div>
                         <br />
@@ -86,14 +90,12 @@
 					</li>
 				</ul>
 				<br />
-				<input type="button" value="Get FD Closure" onclick="main('fd_output');" />
+				<input type="button" value="Get FD Closure" onclick="main('main_output');" />
 			</div>
 			<br />
-			<div id="fd_output">
+			<div id="main_output" class="main_output">
 			</div>
 
-		</div>
-		<br />
 		<div id="algorithm">
 			Inference rules - Armstrong's Axiom
 			<ol>
@@ -310,6 +312,7 @@
 			</ol>
 			<footer>
 			</footer>
+                    </div>
 		</div> <!--! end of #container -->
 		<!-- Javascript at the bottom for fast page loading -->
 
