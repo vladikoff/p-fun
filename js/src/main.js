@@ -5,6 +5,7 @@
  * 
  */
 var output_field_id = "fd_closure_list";
+var target_attr = null;
 
 function main(output_div) {
     var outDiv = document.getElementById(output_div);
@@ -13,7 +14,7 @@ function main(output_div) {
         outDiv.removeChild(child);
     }
     
-    var fdPairSet = processInput("fdTo_", "fdFrom_");
+    var fdPairSet = processInput("attr","fdTo_", "fdFrom_");
     var fdClosureSet = fdClosure(fdPairSet)
 
     output(output_div, fdClosureSet);
@@ -40,7 +41,12 @@ function validate(input) {
 
 
 // assume input is validated...
-function processInput(fdToIdPrefix, fdFromIdPrefix) {
+function processInput(attr, fdToIdPrefix, fdFromIdPrefix) {
+        // check for target attr 
+        var attrField = document.getElementById(attr);
+        target_attr = attrField.value;
+
+        // now check for FD
 	var fds = new JS.Set();
 	var fdIndex = 1; // start from 1 !
 	while(true) {
@@ -121,6 +127,30 @@ function addField(area,fromField,toField, field, limit) {
 }
 
 function output(output_div, fdHash) {
+    var newLineElem = document.createElement('br');
+
+    // attr closure
+    if (target_attr != null && target_attr != "") {
+        var attr_closure = target_attr;
+        for(var start=0; start<=target_attr.length; start++ ) {
+            for(var end=start+1; end<=target_attr.length; end++ ) {
+                var toValue = fdHash.get(target_attr.slice(start,end).split(""));
+                attr_closure += toValue.toString().split(",");
+            }
+        }
+        attr_closure = new JS.Set(attr_closure);
+        attr_closure = attr_closure.toArray().toString().split(",");
+
+        document.getElementById(output_div).appendChild(document.createTextNode("Closure of "+target_attr+" is "+attr_closure));
+    }
+
+    document.getElementById(output_div).appendChild(newLineElem.cloneNode(true));
+    document.getElementById(output_div).appendChild(newLineElem.cloneNode(true));
+    document.getElementById(output_div).appendChild(document.createTextNode("FD Closure:"));
+    document.getElementById(output_div).appendChild(newLineElem.cloneNode(true));
+
+
+    // fd closure
     var list = document.createElement("ul");
     list.id = output_field_id;
     
