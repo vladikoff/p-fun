@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" class="no-js">
+	<head><meta charset="utf-8">
+
+
+		<!--[if IE]><![endif]-->
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess --><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>BCNF Decomposition</title><meta name="description" content="BCNF decomposition for cs411 p-fun project"><meta name="author" content="Yo Han Ko">
+		<link rel="stylesheet" href="css/style.css?v=1">
+		<script src="js/modernizr-1.5.min.js">
+		</script>
+
+	</head>
+
+	<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+	<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+	<!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+	<!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+	<!--[if (gt IE 9)|!(IE)]><!-->
+	<body>
+
+		<!--<![endif]-->
+
+                <div id="container" >
+                    <header> 
+                <nav>
+                <a href="index.html">FD + Attr Closure</a>
+                <a href="bcnf.html">BCNF Closure</a>
+                </nav>
+
+                        <h1>BCNF Decomposition</h1>
+			</header>
+			<div id="instruction">
+				<p>
+                                        <br />
+					Implementation Note:
+					<br />
+					This app is fully implemented in HTML/CSS/Javascript.
+					<br />
+					Main algorithm is implemented in Javascript.
+					<br />
+					Please enable your Javascript on your web-browser.
+					<br />
+					Since it's running on Javascript, browser may freeze on large number of inputs.
+					<br />
+					It has been tested on Firefox3.6 and Chrome 10.
+					<br />
+					<br />
+					Instruction:
+					<br />
+					Input set of FD's in box below. Just keep typing. More boxes will be generated. <br />
+					Note that trivial functional dependencies will not be generated (since they are obvious). <br />
+					<br />
+					Example:
+                                        <br />
+                                        Relation:
+                                        <br />
+					&nbsp;&nbsp;ABCD
+					<br />
+					FD's:
+					<br />
+					&nbsp;&nbsp;A
+					<font face="Symbol">
+						&rarr;
+					</font>B
+					<br />
+					&nbsp;&nbsp;AB
+					<font face="Symbol">
+						&rarr;
+					</font>C
+					<br />
+					&nbsp;&nbsp;B
+					<font face="Symbol">
+						&rarr;
+					</font>D
+
+				</p>
+			</div>
+                        <br />
+                        <div id="relation">
+                        Relation
+                            <ul>
+                                <li><input type="text" name="rel" id="rel" onkeyup="validate(this)" /></li>
+                            </ul>
+                        </div>
+			<div id="fd_closure">
+				<br />
+				FD's:
+				<br />
+				<ul id="fd_list">
+					<li>
+						<input type="text" name="fdFrom_1" id="fdFrom_1" onkeyup="validate(this)" />
+						<font face="Symbol">
+							&rarr;
+						</font>
+						<input type="text" name="fdTo_1" id="fdTo_1" onkeyup="validate(this)" onfocus="addField('fd_list','fdFrom_','fdTo_', this, 20)" />
+					</li>
+				</ul>
+				<br />
+				<input type="button" value="Decompose into BCNF" onclick="bcnf_main('main_output');" />
+			</div>
+			<br />
+			<div id="main_output" class="main_output">
+			</div>
+
+			<footer>
+			</footer>
+                    </div>
+		</div> <!--! end of #container -->
+		<!-- Javascript at the bottom for fast page loading -->
+
+		<script type="text/javascript">
+	JSCLASS_PATH = 'js/jsclass/min'
+		</script>
+		<script type="text/javascript" src="js/jsclass/min/loader-browser.js" >
+		</script>
+		<script src="js/src/fd_closure.js" >
+		</script>
+		<script src="js/src/bcnf.js" >
+		</script>
+		<script src="js/src/main.js" >
+		</script>
+		<!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+		</script>
+		<script>
+	!window.jQuery && document.write('<script src="js/jquery-1.4.2.min.js"><\/script>')
+		</script>
+		<script src="js/plugins.js?v=1">
+		</script>
+		<!--[if lt IE 7 ]>
+		<script src="js/dd_belatedpng.js?v=1"></script>
+		<![endif]-->
+	</body>
+</html>
