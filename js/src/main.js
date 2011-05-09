@@ -7,19 +7,6 @@
 var output_field_id = "output_field";
 var target_attr = null;
 
-function main(output_div) {
-    var outDiv = document.getElementById(output_div);
-    if(document.getElementById(output_field_id)) {
-        var child = document.getElementById(output_field_id);
-        outDiv.removeChild(child);
-    }
-    
-    var fdPairSet = processInput("attr","fdTo_", "fdFrom_");
-    var fdClosureSet = fdClosure(fdPairSet)
-
-    output(output_div, fdClosureSet);
-}
-
 function validate(input) {
     input.value = input.value.toUpperCase();
         
@@ -65,7 +52,6 @@ function processInput(attr, fdToIdPrefix, fdFromIdPrefix) {
 }
 
 function hasEmptyBox(fromField, toField, lastIndex) {
-        console.log(lastIndex);
         for(var i=lastIndex; i>0; --i) {
             var fromElem = document.getElementById(fromField+i);
             var toElem = document.getElementById(toField+i);
@@ -136,6 +122,24 @@ function addField(area,fromField,toField, field, limit) {
 	} else { //Older Method
 		field_area.innerHTML += "<li><input name='"+(field+count)+"' id='"+(field+count)+"' type='text' /></li>";
 	}
+}
+
+function attrClosure(attr, fdHash) {
+    if (attr != null && attr != "") {
+        var attr_closure = attr;
+        for(var start=0; start<=attr.length; start++ ) {
+            for(var end=start+1; end<=attr.length; end++ ) {
+                var toValue = fdHash.get(attr.slice(start,end).split(""));
+                attr_closure += toValue.join("");
+            }
+        }
+        attr_closure = new JS.Set(attr_closure);
+        attr_closure = attr_closure.toArray().join("");
+
+        return attr_closure;
+    }
+
+    return "";
 }
 
 function output(output_div, fdHash) {

@@ -8,10 +8,11 @@ JS.require('JS.Class', 'JS.Module', 'JS.Set', 'JS.Hash');
 // Constructor
 function FuncDep(fdFrom, fdTo) { // accepts arrays
 	this.fdFrom = removeDups(fdFrom);
-	this.fdTo = differenceArray(removeDups(fdTo), this.fdFrom); //removeDups(fdTo);
+	//this.fdTo = differenceArray(removeDups(fdTo), this.fdFrom); 
+	this.fdTo = removeDups(fdTo);
 
 	this.toString = function () {
-		return this.fdFrom.toString() + "->" + this.fdTo.toString();
+		return this.fdFrom.join("") + "->" + this.fdTo.join("");
 	}
 	this.equals = function(fd) {
 		return (equalArray(this.fdFrom, fd.fdFrom) &&
@@ -26,10 +27,22 @@ function FuncDep(fdFrom, fdTo) { // accepts arrays
 		return this;
 	}
 }
+function main(output_div) {
+    var outDiv = document.getElementById(output_div);
+    if(document.getElementById(output_field_id)) {
+        var child = document.getElementById(output_field_id);
+        outDiv.removeChild(child);
+    }
+    
+    var fdPairSet = processInput("attr","fdTo_", "fdFrom_");
+    var fdClosureHash = fdClosure(toHash(fdPairSet));
+
+    output(output_div, fdClosureHash);
+}
 
 // Main logic for FD closure
-function fdClosure(fdPairSet) {
-	var set = toHash(fdPairSet);
+function fdClosure(fdPairHash) {
+	var set = jQuery.extend(true, {}, fdPairHash);
 	var old = null;
 
 	while (!(set.equals(old))) {
